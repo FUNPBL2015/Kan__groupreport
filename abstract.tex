@@ -1,13 +1,12 @@
 \begin{jabstract}
-\quad 本プロジェクトでは、まずフィールドを実際に調査してそこから問題点を見つける。そこで見つかった問題点を解決するためにiOSアプリケーション（以下、アプリとする）を開発して、それにより地域・社会に貢献することを目標として活動を行っている。開発手法はアジャイル開発を用いる。素早くアプリを開発し、それに対するレビューを受けてさらに質の高いアプリを開発していく。\\
-\quad 我々観光系グループは2016年春の北海道新幹線開業に伴い、観光産業に力を入れ始めている木古内町をフィールドに設定した。木古内駅は北海道新幹線の停車駅の一つとなる。新幹線開業によって、TVやSNS等で取り上げられており、一定の知名度上昇は見込まれる。しかしながら、観光客を呼び込むには魅力を伝える手段が必要であると考えられる。そこで、フィールドから木古内町の魅力や抱える問題点を探しながら、木古内観光をより魅力的に、より便利にするアプリの開発を行う。前期の活動として、アプリを開発していく上で必要な技術の勉強会を行ってメンバー全員が基本的な技術を得た。また、同時期に実際に木古内町に現地調査へ行き、どのような問題点があるのか、どのような魅力があるのかを調査した。その結果我々がどのように感じたか、どのようなアプリが必要なのかを話し合った。我々が話し合って固めたアプリ案をティーチングアシスタント（以下、TAとする）や先生、企業の方々に見てもらってアドバイスをもらい、7月にアプリのver.1.0を開発した。そこからさらにレビューを受けてver.2.0を開発してプロジェクト学習の中間発表会で発表した。\\
-\quad これまでの活動を通して生じた課題は、まだアプリの機能がありふれたものであり、木古内であるオリジナリティがないことだ。また、フィールドから得たことを活かせていないのが現状の重大な課題だ。一方、タスク管理をしておくことで作業をスムーズに把握できるようになったことや、これまでのアプリ案の提案やポスター作成においてレビューをもらうことでより質の高いものを制作できるようになることなどの学びを得た。\\
-\quad 今後の活動としては、アプリのver.3.0以降の開発を行っていく。また、木古内町の関係者に実際にアプリを見てもらってレビューをもらい、新たなアプリの機能案やこれまで作ってきた機能の拡張案を見つけていく予定だ。
+\quad 本プロジェクトでは、フィールドを実際に調査してそこから問題点を見つける。そこで見つかった問題点を解決するためにiOSアプリケーション（以降、アプリとする）を開発して、それにより地域・社会に貢献することを目標として活動を行っている。開発手法はアジャイル開発手法を用いる。素早くアプリを開発し、それに対するレビューを受けてより質の高いアプリを開発していく。\\
+\quad 我々観光系グループは2016年春の北海道新幹線開業に伴い、観光産業に力を入れ始めている木古内町をフィールドに設定した。5月初旬に実際に木古内町に現地調査へ行き、どのような問題点があるのか、どのような魅力があるのかを調査した。フィールドワークから、観光情報がSNSやWeb等で分散して分かりにくいという問題点と、観光客はスマートフォンで撮影した写真で思い出を振り返ることが少ないという問題点があることに気づいた。そこから我々が話し合って固めたアプリ案をティーチングアシスタント（以下、TAとする）や先生、企業の方々にレビューをもらいながら、PDCAサイクルを用いて前期と後期で4度の開発を行った。前期の開発では、分散している観光情報の集約と、観光中に撮影した写真を自動的にアルバムにして思い出話を盛り上げるための機能「フォトストーリ―」を提案した。しかし、7月の中間報告会で、これはただ観光情報を表示しているだけでユーザが「行きたい」と思えないという課題と、写真を撮るモチベーションが高くならないという課題が見つかった。後期では、前期の課題を解決するために、木古内で「できること」に着目した情報の表示、そして自分の撮った写真からオリジナルのリーフレットを作成する機能を提案し、実装を行った。この時、開発アプリの名前を「キーコ紀行」とした。12月の最終報告会ではキーコ紀行のデモを行い、レビューを受けた。\\
+\quad 最終報告会でのキーコ紀行の評価が高かったため、今後もメンバー間で開発を進めて来春にはリリースすることを展望としている。まずは木古内の関係者にアプリをレビューしてもらうことが必要である。さらに、まだアプリ内に残っているバグ修正を行っていく。\\
 
 %\fake{ここに日本語の概要を書きます。}
 % 和文キーワード
 \begin{jkeyword}
-木古内町,観光,アジャイル開発, iOSアプリ,現地調査,レビュー
+木古内町,観光,アジャイル開発, iOSアプリ,現地調査,レビュー, PDCAサイクル
 \end{jkeyword}
 \bunseki{山川拓也}
 \end{jabstract}
@@ -17,16 +16,15 @@
 
 \ In this project, at first, we really investigate a field and find problems from field survey. We develop iOS application(app) to solve problems found from field survey. We are thereby active with the goal of contributing to an area. We use Agile development which is a development technique. We do swift app development, and develop higher quality app by receiving the reviews for it. 
 
-\ Our tourism group set Kikonai town as the field. The town began to lay emphasis on tourism industry due to opening Hokkaido Shinkansen in the spring of 2016. Kikonai station will become one of the stations of Hokkaido Shinkansen. TV or SNS take up about it by the Shinkansen opening of business, and the rise of fixed popularity is anticipated. However, as for us, it is thought that means to introduce charm into is necessary to call in tourists. Then, we develop app to do Kikonai tourism more usefully and attractively while looking for charm of the town and problems to have from there. As first-term activity, the members performed the study session of a necessary technique in developing app and learned basic techniques. In the same period, we also surveyed it what kind of problems and what kind of charms it has by going to the town in fact. From the survey, we discussed what kind of app was necessary and how did we feel it. We received many advices about our app's ideas from Teaching Assistant(TA), teachers, and the company people. Then, in July, we developed ver.1.0 of app. We received reviews more from there and developed ver.2.0 of it and announced it at a middle presentation of the project learning. 
+\ Our tourism group set Kikonai town as the field. The town began to lay emphasis on tourism industry due to opening Hokkaido Shinkansen in the spring of 2016. In the beginning of May, we surveyed Kikonai what kind of problems and charms it has by going to the town in fact. From this, we found that the sightseeing information disperses in SNS and web. Furthermore, tourists The tourists don't look back the photos which they took. Then, we developed an app four times totally with PDCA cycle in the first semester and the second semester while receiving many advices of our app's ideas to Teaching Assistant(TA), teachers, and the company people. In the first semester, we suggested two functions that intensiveness of dispersing information and making an album automatically from photos which users took during sightseeing in order to enliven recollections talk as ``photo story.'' However, in the midterm presentation of July, we found two problems that we only showed information about Kikonai and this app couldn't make user raise the motivation to take photos. In the second semester, we suggest two functions that sightseeing information paid its attention to ``being able to do it'' in Kikonai and making an original leaflet by using taken photos. Then we implemented them. In this time, we named this app ``Ki-ko Kiko.'' In the final presentation of December, we gave a demonstration of it and received reviews from many people.
 
-\ The problems that occurred through past activity are that app's functions was still occurred and there is not originality for Kikonai. Also, we could not make use of experience from the field. However, we obtained learning, for example, grasp of the work became more smooth by doing task management and we became able to produce higher quality things by getting reviews in suggestion of app's plan and poster making. 
+\ We continue to develop it and intend to release this app by the next spring because its evaluation was high in the final presentation. At first it's necessary to have people concerned of Kikonai watch it. In addition, it's also necessary for us to revise bugs of it.
 
-\ As future activity, we develop after ver.3.0 of the app. Also, we will receive reviews about our app from people concerned to Kikonai. Then, we are going to find function plans and expansion plans of new app's functions.
 
 
 % 英文キーワード
 \begin{ekeyword}
-Kikonai Town, Tourism, Agile development, iOS Application, Field Survey, Reviews
+Kikonai Town, Tourism, Agile development, PDCA Cycle, iOS Application, Field Survey, Reviews
 \end{ekeyword}
 \bunseki{山川拓也}
 \end{eabstract}
