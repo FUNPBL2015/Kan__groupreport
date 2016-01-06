@@ -1,4 +1,142 @@
 %\chapter{使用技術}
 \section{マップ}
-aaaa
-\bunseki{fuga}
+マップ画面では、マップを表示するためにMKMapView、現在地を取得し表示するためにCLLocationManager、マップ上に設置するピンを管理・表示するためにMKAnnotationViewを使用した。また、マップ画面下にあるカード情報の切り替えはUIViewがもつanimateWithDurationメソッドを使用した。以下にそれぞれの核となるコードをピックアップして記載した。
+
+\begin{description}
+\item[MKMapView]\mbox{} 
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
+1. var region:MKCoordinateRegion = self.CardMap.region
+2. let location:CLLocationCoordinate2D = CLLocationCoordinate2DMake
+    (DB().getCard(pic_id!).position_x, DB().getCard(pic_id!).position_y)
+
+3. region.center = location
+4. region.span.longitudeDelta = 0.005
+5. region.span.latitudeDelta = 0.005
+6. self.CardMap.setRegion(region, animated: true)
+
+7. CardMap.addAnnotations(PinArray)
+ \end{lstlisting}
+
+1. マップ起動時に表示する場所の情報を格納する変数regionの宣言。 \\
+2. マップに設定する緯度経度を格納する変数locationの初期化。ここでは、マップへの画面遷移時にタップしたカード番号をpic\_idとして取得し、対応するカードの緯度経度をデータベースから取得して設定している。\\
+3. マップの中心を2で設定した緯度経度にする。\\
+4. 表示する領域の横方向の縮尺を0.005に設定。 \\
+5. 表示する領域の縦方向の縮尺を0.005に設定。 \\
+6. MKMapViewとして宣言したCardMapに設定した中心の場所及び表示領域をセットする。なお、storyboardにMapViewを設置し、コードとOutlet接続を行ったためself.view.addSubview(CardMap)のような記述は必要がない。\\
+7. マップ上にピンを追加する記述。引数はMKAnnotation型であり、この場合は複数のMKAnnotationを引数としているためaddAnnotationsとなっている。単体のMKAnnotationを追加する場合は、addAnnotationを使う。 \\
+\end{description}
+
+\begin{description}
+\item[CLLocationManager]\mbox{} 
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
+1. var myLocationManager: CLLocationManager!
+
+2. myLocationManager = CLLocationManager()
+3. myLocationManager.delegate = self
+4. myLocationManager.distanceFilter = kCLHeadingFilterNone
+5. myLocationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
+6. myLocationManager.startUpdatingLocation()
+
+7. func locationManager(manager: CLLocationManager,
+didUpdateLocations locations: [CLLocation]){
+        CardMap.showsUserLocation = true
+    }
+ \end{lstlisting}
+
+1. CLLocationManagerオブジェクトを格納するための変数myLocationManagerを宣言。\\
+2. CLLocationManagerをインスタンス化。\\
+3. 位置情報を取得した時の通知先を自分自身に設定。\\
+4. 位置情報を更新する頻度を設定。この場合はkCLHeadingFilterNoneを指定し、動くたびに位置情報を更新するようにしている。 \\
+5. 測位の精度を設定している。ここでは、kCLLocationAccuracyHundredMetersを指定し100mの精度にしている。 \\
+6. GPSの使用を開始するメソッドを呼び出している。\\
+7. 位置情報が更新された際に呼ばれるデリゲートメソッド。この中に記述してあるCardMap.showsUserLocation = trueは、MapView(CardMap)にユーザの位置を表示することを意味している。\\
+\end{description}
+
+\begin{description}
+\item[MKAnnotationView]\mbox{} 
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
+1. class Pin : MKPointAnnotation{
+      var ID = 0
+      var text = ""
+      var info = ""
+      var photo = NSData()
+      var categoryID = 0
+      var x: Double = 0.0
+      var y: Double = 0.0
+      var imageName = ""
+    }
+    
+2. for(var i = 0; i < flagTrueIDList.count; i++){
+      PinArray.append(Pin())
+      PinArray[i].ID = db.getCard(flagTrueIDList[i]).ID
+      PinArray[i].title = db.getCard(flagTrueIDList[i]).spotName
+      PinArray[i].text = (db.getCard(flagTrueIDList[i]).cardText?.text)!
+      PinArray[i].info = db.getCard(flagTrueIDList[i]).info
+      PinArray[i].photo = (db.getCard(flagTrueIDList[i]).photo?.photoData)!
+      PinArray[i].categoryID = db.getCard(flagTrueIDList[i]).categoryID
+      PinArray[i].x = db.getCard(flagTrueIDList[i]).position_x
+      PinArray[i].y = db.getCard(flagTrueIDList[i]).position_y
+      PinArray[i].coordinate = CLLocationCoordinate2DMake
+      (PinArray[i].x, PinArray[i].y)
+      PinArray[i].imageName = "fa3.png"
+    }
+    
+3. PinArray.append(Pin())
+   PinArray[PinArray.count-1].ID = pic_id!
+   PinArray[PinArray.count-1].title = DB().getCard(pic_id!).spotName
+   PinArray[PinArray.count-1].text = (DB().getCard(pic_id!).
+   cardText?.text)!
+   PinArray[PinArray.count-1].info = DB().getCard(pic_id!).info
+   PinArray[PinArray.count-1].x = DB().getCard(pic_id!).position_x
+   PinArray[PinArray.count-1].y = DB().getCard(pic_id!).position_y
+   PinArray[PinArray.count-1].coordinate = CLLocationCoordinate2DMake
+   (PinArray[PinArray.count-1].x, PinArray[PinArray.count-1].y)
+
+4. if((flagTrueIDList.indexOf(pic_id!)) != nil){
+     PinArray[flagTrueIDList.indexOf(pic_id!)!].imageName = ""
+     PinArray[PinArray.count-1].imageName = "redpin.png"
+    }else{
+     PinArray[PinArray.count-1].imageName = "redpin.png"
+    }
+    
+5. func mapView(mapView: MKMapView, didSelectAnnotationView view: 
+    MKAnnotationView) {
+     self.UserAnnotationTap = 1
+     self.CardLabelShowText = 0
+     for(PinAddress = 0; PinAddress < PinArray.count; PinAddress++){
+         if(PinArray[PinAddress].hash == view.annotation!.hash){
+             CardSyousai.text = PinArray[PinAddress].title! + "\n" + 
+             PinArray[PinAddress].info
+             camera2View.image = PhotoController().NSSImage
+             ((DB().getCard(PinArray[PinAddress].ID).photo?.photoData)!)
+                CardPoemu.text = PinArray[PinAddress].text
+                break;
+            }
+        }
+    }
+    
+6. func mapView(mapView: MKMapView, viewForAnnotation annotation: 
+    MKAnnotation) -> MKAnnotationView? {
+    let myIdentifier = "myPin"
+    var myAnnotation: MKAnnotationView!
+    if myAnnotation == nil {
+         myAnnotation = MKAnnotationView(annotation: annotation,
+         reuseIdentifier: myIdentifier)
+     }
+    myAnnotation.canShowCallout = true
+    let cpa = annotation as! Pin
+    myAnnotation.image = UIImage(named:cpa.imageName)
+    myAnnotation.annotation = annotation
+    return myAnnotation
+    }
+
+ \end{lstlisting}
+
+1. マップ上に表示するピンをクラスとして管理するためにPinクラスをMKPointAnnotationを継承して定義した。\\
+2. カードリスト画面でユーザが星をつけたスポット(カード)をPinクラスを配列にしたPinArrayへ格納していくためのループ処理。\\
+3. マップ画面へ遷移する際にタップしたスポット(カード)をPinArrayの最後に追加する処理。\\
+4. マップ画面へ遷移する際にタップしたスポットと星をつけたスポットが同じ場合には、星マークではなく赤色のピンを優先して表示するための処理。\\
+5. マップ上のピンがタップされた時に呼ばれるデリゲートメソッド。PinArrayからタップしたピンに対応するピンを探し出して、表示する情報を新たに設定している。\\
+6. マップにピンを表示するためのデリゲートメソッド。このメソッドは無駄なメモリ消費を避けるために、ピンがマップ上に表示されていたら新たに作成せずにピンを再利用する設計になっている。\\
+\end{description}
+\bunseki{岩見建汰}
