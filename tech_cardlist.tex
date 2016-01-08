@@ -1,4 +1,5 @@
 %\chapter{使用技術}
 \section{カードリスト}
-aaaa
-\bunseki{fuga}
+まずStoryboardでTableViewとTableViewCellを使用して概形を作成した。そして、そのCellの中に写真を読み込むためのUIImageViewとタイトルと紹介文を表示するための2つのLabel、他の画面に遷移したりお気に入りの切り替えをするためのボタンを4つ配置した。Cell一つ一つが持つ情報のModelをcardData.swiftという名のファイルで作成し、そこにタイトルや紹介文、画像のURL等を格納するようにした。次にsetCardListというUITableViewCellのサブクラスを作成し、そこに一つのセル（以降、カードとする）に写真やテキスト、お気に入り機能のOn/Offなどを読み込ませるようにした。各ボタンを押したときの動作やiPhoneの画面サイズを判別し、テキストのフォントサイズを変えるコーディングもこのファイル内で実装した。最後にcardListというクラスで、setCardlistで作成したカードをfor文で読み込み上から順番に並べて表示が出来るようにした。
+
+\bunseki{山川拓也}
