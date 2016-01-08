@@ -1,4 +1,52 @@
 %\chapter{使用技術}
 \section{データベース}
-aaaa
-\bunseki{fuga}
+データベース
+このアプリでは、データベースにRealmを用いた。またデータベースの内容を閲覧するためにはRealm Browserを用いた。このデータベースを使用するにあたり、重要な部分のコードを以下に記述・解説する。
+ 
+\begin{description}
+\item[Realmモデルオブジェクトの定義]\mbox{} 
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
+ 
+class CardData: Object {   
+  dynamic var ID = 0
+  dynamic var cardText: CardText?
+  …
+  dynamic var updated = false
+
+  override class func primaryKey() -> String {
+    return "ID"
+  }
+}
+ \end{lstlisting}
+ 
+モデルオブジェクトはクラスで宣言して定義する。このテーブルのカラム要素は”dynamic var カラム名 = 初期値” で宣言することで設定することができる。また、このRealmはKVCと呼ばれるキー値コーディングに対応しており、クラス中のprimaryKey()メソッドでプライマリキーを設定する。プライマリキーを設定することで、オブジェクトを効率的に検索・更新することができ、その一意性を保つこともできる。
+\end{description}
+ 
+\begin{description}
+\item[データの保存]\mbox{} 
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
+func addRecord(record: Object) {
+  let realm = try! Realm(path: getRealmPath())
+  try realm.write {
+    realm.add(record, update:true)
+   }
+ }
+\end{lstlisting}
+ 
+データの保存には、writeトランザクションの中でaddメソッドを使用する。addメソッドの第1引数は対応するRealmオブジェクトで、その内容がレコードとして保存される。第2引数は保存するレコードのプライマリキーが既にデータベース内に存在していた場合に上書きするか否かを選択する要素である。trueを選択した場合同じプライマリキーのレコードを上書きし、falseを選択した場合は新たにレコードを作って保存する。
+\end{description}
+ 
+ \begin{description}
+\item[クエリの発行]\mbox{} 
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
+func getCard(id: Int) -> CardData {
+  let realm = try! Realm(path: getRealmPath())
+  let card = realm.objects(CardData).filter("ID = %@", id)[0]
+  return card
+ }
+ \end{lstlisting}
+ 
+これはCardDataテーブルから対応するIDのレコードを検索・取得するメソッドである。クエリの発行は○行目のようにして行う。まず、どのテーブルを検索するかを指定し、そのテーブル(オブジェクト)に対してfilterメソッドで検索を行う。このメソッドの第1引数はクエリ本体で、変数を用いる場合にはその部分に\%@と記述し、第2引数以降に対応する値や変数を記述する。
+\end{description}
+
+\bunseki{細川椋太}
