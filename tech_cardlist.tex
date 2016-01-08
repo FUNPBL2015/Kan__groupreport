@@ -2,4 +2,81 @@
 \section{カードリスト}
 まずStoryboardでTableViewとTableViewCellを使用して概形を作成した。そして、そのCellの中に写真を読み込むためのUIImageViewとタイトルと紹介文を表示するための2つのLabel、他の画面に遷移したりお気に入りの切り替えをするためのボタンを4つ配置した。Cell一つ一つが持つ情報のModelをcardData.swiftという名のファイルで作成し、そこにタイトルや紹介文、画像のURL等を格納するようにした。次にsetCardListというUITableViewCellのサブクラスを作成し、そこに一つのセル（以降、カードとする）に写真やテキスト、お気に入り機能のOn/Offなどを読み込ませるようにした。各ボタンを押したときの動作やiPhoneの画面サイズを判別し、テキストのフォントサイズを変えるコーディングもこのファイル内で実装した。最後にcardListというクラスで、setCardlistで作成したカードをfor文で読み込み上から順番に並べて表示が出来るようにした。
 
+\begin{description}
+\item[setCardList]\mbox{} 
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
+1. @IBOutlet weak var iconImage: UIImageView!
+   @IBOutlet weak var title: UILabel!
+   @IBOutlet weak var introText: UILabel!
+2. func setCell(card :cardData) {
+3. let height = UIScreen.mainScreen().bounds.size.height
+4. if height >= 667 {
+    self.introText.font = UIFont.systemFontOfSize(14)
+5.  }else {
+     self.introText.font = UIFont.systemFontOfSize(12)
+     }
+6.self.title.text = card.title as String
+7.self.introText.text = card.introText as String
+8.let myImage = PhotoController().NSSImage(card.imageUrl!)
+9.self.iconImage.image = myImage
+   }
+ \end{lstlisting}
+
+1.iconImageを写真を表示するUIImageView、titleをタイトルを表示するためのUILabel、introTextを紹介文を表示するためのUILabelとして宣言。\\
+2.セル一つに情報を加えるメソッド。引数はcardData型のcardと宣言した。cardにはタイトルや紹介文、写真データが格納されている。\\
+3.iPhoneの画面の高さを求めて、その数値をheightに代入。\\
+4.iPhone6・6sの画面サイズの時の紹介文のフォントサイズを14に設定 \\
+5.iPhone5・5s・5cの画面サイズの時の紹介文のフォントサイズを12に設定 \\
+6.タイトルのテキストを代入。 \\
+7.紹介文のテキストを代入。 \\
+8.宣言したmyImageに写真のURLを代入。 \\
+9.写真のデータを代入。 \\
+\end{description}
+
+\begin{description}
+\item[cardList]\mbox{} 
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
+1. var cards:[cardData] = [cardData]()
+2. override func viewDidLoad() {
+3. self.setupLists()
+4. self.tableView.delegate = self
+5. self.tableView.dataSource = self
+    }
+6.func setupLists() {
+7. for var i = 1; i <= DB().cardListSize(); i++ {
+8.  let card = DB().getCard(i)
+9.  let f1 = cardData(title: card.cardText!.title,
+     introText: card.cardText!.text,imageUrl: 
+     NSData(data: (DB().getCard(i).photo?.photoData)!),
+     id: i-1,flag:DB().getFlagStatement(i))
+10. cards.append(f1)
+    }
+  }
+11. func tableView(tableView: UITableView, 
+      cellForRowAtIndexPath .indexPath:NSIndexPath) -> UITableViewCell {
+12. let cell: setCardList = tableView.dequeueReusableCellWithIdentifier
+      ("cell", forIndexPath: indexPath) as! setCardList
+13. cell.setCell(cards[indexPath.row])
+14. return cell
+    }
+  }
+ \end{lstlisting}
+
+1.cardDataの配列のインスタンスを作成。\\
+2.画面を起動した時の動作を宣言したメソッド。\\
+3.setupListsメソッドを実行。\\
+4.tableView自身をデリゲートする。\\
+5.データの情報源を自身に代入する。\\
+6.リストを複数作り出すメソッド。\\
+7.カードリストの大きさ分for文を回す。\\
+8.i番目のカードのIDを受け取って宣言したcardに代入。\\
+9.宣言したf1にカードに必要なタイトル、紹介文、写真、お気に入りの状態やボタンなどを代入。\\
+10.カードに代入。\\
+11.各行のセルを表示するメソッド。\\
+12.cellのIDでUITableViewCellのインスタンスを作成。\\
+13.indexPath.row番目のカード情報を代入。\\
+14.cellを返す。
+
+\end{description}
+
 \bunseki{山川拓也}
