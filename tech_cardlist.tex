@@ -33,4 +33,50 @@
 9.写真のデータを代入。 \\
 \end{description}
 
+\begin{description}
+\item[cardList]\mbox{} 
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
+1. var cards:[cardData] = [cardData]()
+2. override func viewDidLoad() {
+3. self.setupLists()
+4. self.tableView.delegate = self
+5. self.tableView.dataSource = self
+    }
+6.func setupLists() {
+7. for var i = 1; i <= DB().cardListSize(); i++ {
+8.  let card = DB().getCard(i)
+9.  let f1 = cardData(title: card.cardText!.title,
+     introText: card.cardText!.text,imageUrl: 
+     NSData(data: (DB().getCard(i).photo?.photoData)!),
+     id: i-1,flag:DB().getFlagStatement(i))
+10. cards.append(f1)
+    }
+  }
+11. func tableView(tableView: UITableView, 
+      cellForRowAtIndexPath .indexPath:NSIndexPath) -> UITableViewCell {
+12. let cell: setCardList = tableView.dequeueReusableCellWithIdentifier
+      ("cell", forIndexPath: indexPath) as! setCardList
+13. cell.setCell(cards[indexPath.row])
+14. return cell
+    }
+  }
+ \end{lstlisting}
+
+1.cardDataの配列のインスタンスを作成。\\
+2.画面を起動した時の動作を宣言したメソッド。\\
+3.setupListsメソッドを実行。\\
+4.tableView自身をデリゲートする。\\
+5.データの情報源を自身に代入する。\\
+6.リストを複数作り出すメソッド。\\
+7.カードリストの大きさ分for文を回す。\\
+8.i番目のカードのIDを受け取って宣言したcardに代入。\\
+9.宣言したf1にカードに必要なタイトル、紹介文、写真、お気に入りの状態やボタンなどを代入。\\
+10.カードに代入。\\
+11.各行のセルを表示するメソッド。\\
+12.cellのIDでUITableViewCellのインスタンスを作成。\\
+13.indexPath.row番目のカード情報を代入。\\
+14.cellを返す。
+
+\end{description}
+
 \bunseki{山川拓也}
