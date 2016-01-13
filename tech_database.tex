@@ -39,14 +39,14 @@ func addRecord(record: Object) {
  \begin{description}
 \item[クエリの発行]\mbox{} 
 \begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
-func getCard(id: Int) -> CardData {
-  let realm = try! Realm(path: getRealmPath())
-  let card = realm.objects(CardData).filter("ID = %@", id)[0]
-  return card
- }
+1. func getCard(id: Int) -> CardData {
+2.   let realm = try! Realm(path: getRealmPath())
+3.   let card = realm.objects(CardData).filter("ID = %@", id)[0]
+4.   return card
+5.  }
  \end{lstlisting}
  
-これはCardDataテーブルから対応するIDのレコードを検索・取得するメソッドである。クエリの発行は○行目のようにして行う。まず、どのテーブルを検索するかを指定し、そのテーブル(オブジェクト)に対してfilterメソッドで検索を行う。このメソッドの第1引数はクエリ本体で、変数を用いる場合にはその部分に\%@と記述し、第2引数以降に対応する値や変数を記述する。
+これはCardDataテーブルから対応するIDのレコードを検索・取得するメソッドである。クエリの発行は3行目のようにして行う。まず、どのテーブルを検索するかを指定し、そのテーブル(オブジェクト)に対してfilterメソッドで検索を行う。このメソッドの第1引数はクエリ本体で、変数を用いる場合にはその部分に\%@と記述し、第2引数以降に対応する値や変数を記述する。
 \end{description}
 
 \bunseki{細川椋太}
