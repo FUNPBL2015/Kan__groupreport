@@ -1,6 +1,6 @@
 %\chapter{使用技術}
 \section{振り返る機能}
-振り返る機能は、デフォルトの写真とユーザが撮影した写真の2種類を見ることができるようにViewControllerを2つ用意し、アニメーションなしの画面遷移を行うことで1つの画面で切り替えているように見せている。それぞれのViewControllerにはたくさんの画像などを並べて表示する際によく使用されるUICollectionView及び2つの選択を排他的に行うパーツであるSegmentedを設置し、xibファイルを使用してセルを設定した。以下に振り返る機能で使用した主な技術であるUICollectionView、Segmented,xibについての詳細を記載した。
+振り返る機能は、デフォルトの写真とユーザが撮影した写真の2種類を見ることができるようにUIViewControllerを2つ用意し、アニメーションなしの画面遷移を行うことで1つの画面で切り替えているように見せている。それぞれのUIViewControllerにはたくさんの画像などを並べて表示する際によく使用されるUICollectionView及び2つの選択を排他的に行うパーツであるUISegmentedControlを設置し、xibファイルを使用してセルを設定した。以下に振り返る機能で使用した主な技術であるUICollectionView、UISegmentedControl,xibについての詳細を記載した。
 
 \begin{description}
 \item[UICollectionView]\mbox{} 
@@ -90,11 +90,11 @@
  \end{lstlisting}
 
 1. UICollectionViewに表示するセルの数を返すメソッド。撮影写真が0枚の場合は、木古内町観光マスコットキャラクターキーコを表示するために1を返す。0枚以外の場合は、撮影した枚数を返す。 \\
-2. UICollectionViewのセルに表示する画像とテキストを設定するメソッド。撮影写真を表示するViewControllerになっている且つ撮影写真が0枚の場合は木古内町観光マスコットキャラクターキーコを設置したセルを返す。撮影写真を表示するViewControllerになっている且つ撮影写真が1枚以上ある場合は、ユーザが撮影した写真を設置したセルを返す。デフォルトの写真を表示するViewControllerになっている場合は、デフォルトの写真を設置したセルを返す。
+2. UICollectionViewのセルに表示する画像とテキストを設定するメソッド。撮影写真を表示するUIViewControllerになっている且つ撮影写真が0枚の場合は木古内町観光マスコットキャラクターキーコを設置したセルを返す。撮影写真を表示するUIViewControllerになっている且つ撮影写真が1枚以上ある場合は、ユーザが撮影した写真を設置したセルを返す。デフォルトの写真を表示するUIViewControllerになっている場合は、デフォルトの写真を設置したセルを返す。
 \end{description}
 
 \begin{description}
-\item[Segmented]\mbox{} 
+\item[UISegmentedControl]\mbox{} 
 \begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
 1. @IBAction func segmentedchanged(sender: AnyObject) {
      switch sender.selectedSegmentIndex{
@@ -129,8 +129,8 @@
    }
 \end{lstlisting}
 
-1. こちらのIBActionはデフォルト写真を表示するViewControllerに設置されているSegmentedに接続されている。撮影写真を選択した場合は該当するViewControllerに画面遷移を行うが、デフォルト写真が選択された場合は何もしない。 \\
-2. こちらのIBActionは撮影写真を表示するViewControllerに設置されているSegmentedに接続されている。1のIBActionと逆の動作を行う。 \\
+1. こちらのIBActionはデフォルト写真を表示するUIViewControllerに設置されているSegmentedに接続されている。撮影写真を選択した場合は該当するUIViewControllerに画面遷移を行うが、デフォルト写真が選択された場合は何もしない。 \\
+2. こちらのIBActionは撮影写真を表示するUIViewControllerに設置されているUISegmentedControlに接続されている。1のIBActionと逆の動作を行う。 \\
 
 \end{description}
 
@@ -160,9 +160,9 @@
    
    self.addSubview(self.collectionView)
 \end{lstlisting}
-※xibはstoryboardがアプリ全体の画面遷移を管理するのに対し、1つ又は複数の画面についての設計を行いstoryboardへ組み込むような形で使用する。xibを画面ごとに分割してそれぞれのxibをstoryboardに組み込むような挙動を設定することでチーム開発でのコンフリクトが発生しにくくなり、効率良く開発ができる。 \\ \\
+※xibはStory boardがアプリ全体の画面遷移を管理するのに対し、1つ又は複数の画面についての設計を行いStory boardへ組み込むような形で使用する。xibを画面ごとに分割してそれぞれのxibをStory boardに組み込むような挙動を設定することでチーム開発でのコンフリクトが発生しにくくなり、効率良く開発ができる。 \\ \\
 1. xibに使用している部品とソースコード間でのIBOutlet接続及びUILabel内に表示するテキストの行数を設定している。 \\
-2. xibを読み込むコードである。xibのファイル名をnibNameにStringで指定しIdentifierも他と重複しない名前をStringで指定する。読み込んだ後は通常のstoryboardと同様にaddSubviewを使用して画面へ追加・表示する。 \\
+2. xibを読み込むコードである。xibのファイル名をnibNameにStringで指定しIdentifierも他と重複しない名前をStringで指定する。読み込んだ後は通常のStory boardと同様にaddSubviewを使用して画面へ追加・表示する。 \\
 
 \end{description}
 \bunseki{岩見建汰}
