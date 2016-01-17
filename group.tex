@@ -134,6 +134,110 @@
 
 \chapter{まとめ}
 \input summary.tex
+
+% 以降、付録(付属資料)であることを示す
+\begin{appendix}
+\chapter{新規習得技術}
+\section{WebAPI}
+アプリケーションの作成にあたり、天気の情報を取得するためにWebAPIを利用した。これはHTTP等のWeb技術を用いてプログラムの提供する機能を利用するためのサービスであり、有償のものも含め多くの種類が公開されている。本プロジェクトの成果物には``OpenWeatherMap''\footnote{http://openweathermap.org/}を利用しており、このAPIから返されるJSON形式のデータを処理することで、天気情報を表示している。WebAPIの優れている点は、インターネットに接続された環境であればどこからでも利用できるという点である。前述の通り、WebAPIはHTTPなどのWeb技術を用いたサービスである。このため、特殊な機器やシステムを一切使用することなく、多くの機器で普遍的に利用することができる。
+\bunseki{横山翔栄}
+
+\chapter{活用した講義}
+ 報告書の参考文献を明示するために、科学技術リテラシーで学んだ参考文献の書き方の知識を用いた。、また、中間発表で用いたポスターを作成するにあたって、情報表現基礎や情報デザインの講義で得た知識や経験を用いた。見やすく分かりやすいポスターを作るために、できる限り文字を図にして置き換え、図解によって主要を伝えるという点を意識した。また、全体の印象を整えるため各要素の位置を他の要素にそろえた。プロジェクトを進めていくうえでアプリの開発形態を見直すとき、ソフトウェア設計論I  で学んだウォーターフォールモデルとアジャイル開発手法の考え方を参考にした。本プロジェクトはアジャイル開発手法であり、ウォーターフォールモデルのような1つ1つの段階を固めてから次の段階に進むということはせず、開発を迅速に行いレビューを受け、再び開発をしていくものであるということを常に意識することが重要だと学んだ。アプリはどのような機能を持っているか、ユーザはどのようにアプリを使うのかを明示してそれを設計するためにソフトウェア設計論II  のユースケース図とアクティビティ図の書き方を参考にした。以下が作成した図である。
+
+\bunseki{山川拓也}
+
+    \begin{figure}{}
+        \begin{center}
+\includegraphics[width=14cm, bb=0 0 520 388]{project_usecase2.png}
+        \end{center}
+         \caption{ユースケース図}
+ \label{fig:one}
+      \end{figure}
+ 
+
+    \begin{figure}{}
+        \begin{center}
+\includegraphics[width=20cm, bb=0 0 1880 2077]{project_activity2.2-1.png}
+        \end{center}
+ \label{fig:one}
+      \end{figure}
+      
+
+       \begin{figure}{}
+        \begin{center}
+\includegraphics[width=20cm, bb=0 0 1880 2041]{project_activity2.2-2.png}
+        \end{center}
+                 \caption{アクティビティ図}
+ \label{fig:one}
+      \end{figure}
+      
+\chapter{その他成果物}  
+\section{画面遷移図}
+
+
+
+\section{Gitマニュアル}
+運用ルールとか \\
+・プルリクエストは、コメント欄に３人の承認があって初めてマージできるものとする。マージするのは、原則として３人目のコメント者が行う。(あまりにも遅い場合は残りの２人がマージ）\\
+・ブランチの切り方については「git-flow」を参照のこと \\ \\
+Gitを使った作業の始め方 \\
+cd [場所] でどこで作業するか決めて移動する。 \\
+git clone [URL] でクローンする。(初回のみ　※1) \\
+      ● git branch develop　ローカルにdevelopブランチを作る \\
+git checkout develop　(developブランチにpullするため、移動) \\
+git pull origin develop　でリモートリポジトリの内容をローカルに反映 \\
+git branch で全ブランチ、現在のブランチを確認。 \\
+git branch yamakawa で作業ブランチ”yamakawa”を作成。 \\
+git checkout yamakawaでブランチの移動。 \\
+	git checkout -b yamakawa \\
+→（yamakawaブランチを作成して移動）\\
+ ファイルを編集・保存 \\
+git add [file] \\
+git commit -m “commit message” \\
+git push origin yamakawa  -$>$  yamakawaブランチをpush \\ \\
+※1
+もし、pushが403エラーで成功しない場合、cloneするときにgithubユーザー名を付けてみる \\
+git clone https://Githubユーザ名@github.com/FUNPBL2015/kan\_practice1.git \\
+git pull origin pullしたいリモートブランチ名:ローカルブランチ名 \\ \\
+GitHub文化の話… \\
+プルリクエスト承認コメントの慣例「LGTM(Looks Good To Me)」 \\
+http://d.hatena.ne.jp/keyword/LGTM \\
+lgtm.in とかも調べてみる \\ \\
+ローカルのmasterがリモートのmasterより遅れているときの解消方法 \\
+\$ git graph \\
+* (origin/master, origin/HEAD) \\
+| \ \\
+|  * (HEAD, origin/develop, develop) \\
+| / \\
+* (master) \\
+↑この状態のとき \\
+git checkout master \\
+git pull origin master \\
+で、ローカルのmasterがリモートと同じ位置まで移動する。 \\ \\
+リモートリポジトリが壊れた場合、ローカルリポジトリを丸ごとコピーする形で修復を行うこともある。バックアップの意味でも、↑のような状況になっている場合はこの作業を行うこと。 \\ \\
+こんな時..... \\
+・git status をして、 \\
+　Changes not staged for commit: \\
+  　(use "git add $<$file$>$..." to update what will be committed) \\
+  　(use "git checkout -- $<$file$>$..." to discard changes in working directory) \\
+　modified:　kankouApp.xcodeproj/project.xcworkspace/xcuserdata/ \\
+\hspace{0.5cm} kouritsuhakodatemiraidaigakukoudoictkosu.xcuserdatad/UserInterfaceState.xcuserstate \\
+　と表示されたら、 \\
+　git checkout -- $<$赤字をコピペ$>$ すればうまくいける。 \\ \\
+・ローカルのブランチを消したい \\
+	git branch -d [ブランチ名] \\ \\
+・git push origin :test \\
+リモートにあるtestブランチを削除できる。 \\ \\
+・今いるブランチのローカルでの変更をなかったことにする \\
+変更をコミットしてからブランチ切り替えして、と言われた時に使える \\
+コンフリクトの時は！ \\
+エラーメッセージに従って処理  \\
+
+
+%付録の終わり
+\end{appendix}
+
 % 参考文献
 \begin{thebibliography}{9}
 \bibitem{NN2013}
